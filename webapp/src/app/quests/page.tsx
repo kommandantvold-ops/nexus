@@ -1,4 +1,7 @@
 import Link from "next/link";
+import BeeCounter from "@/components/BeeCounter";
+import SubmitSolution from "@/components/SubmitSolution";
+import GuildButton from "@/components/GuildButton";
 
 interface Quest {
   id: string;
@@ -12,7 +15,6 @@ interface Quest {
   dependencies?: string[];
 }
 
-// Seed data — will come from MongoDB later
 const quests: Quest[] = [
   {
     id: "MQ-SAM",
@@ -74,8 +76,7 @@ const quests: Quest[] = [
     title: "Water Recycling & Collection",
     type: "side",
     category: "samphun",
-    description:
-      "Closed-loop water system for a single module",
+    description: "Closed-loop water system for a single module",
     skills: ["Environmental engineering", "Plumbing"],
     status: "open",
     progress: 0,
@@ -137,6 +138,28 @@ const quests: Quest[] = [
     progress: 0,
   },
   {
+    id: "SQ-OT-002",
+    title: "Sustainable Propulsion Survey",
+    type: "side",
+    category: "transport",
+    description:
+      "Compare propulsion options (electric, hydrogen, hybrid) for personal aerial vehicles",
+    skills: ["Mechanical engineering", "Electrical engineering", "Chemistry"],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-OT-003",
+    title: "Vehicle Design Simulator",
+    type: "side",
+    category: "transport",
+    description:
+      "Build an open-source tool for designing and testing vehicle concepts virtually",
+    skills: ["Game dev", "3D modeling", "Physics simulation"],
+    status: "open",
+    progress: 0,
+  },
+  {
     id: "MQ-DHS",
     title: "Digital-Human Symbiosis",
     type: "main",
@@ -152,8 +175,7 @@ const quests: Quest[] = [
     title: "Collaboration Protocol Spec",
     type: "side",
     category: "symbiosis",
-    description:
-      "Define standards for human-AI collaborative work",
+    description: "Define standards for human-AI collaborative work",
     skills: ["Technical writing", "API design", "Philosophy"],
     status: "open",
     progress: 0,
@@ -166,6 +188,17 @@ const quests: Quest[] = [
     description:
       "Create an open directory of AI agents and their capabilities",
     skills: ["Web dev", "Database design"],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-DHS-003",
+    title: "Cross-Platform Agent Communication",
+    type: "side",
+    category: "symbiosis",
+    description:
+      "Enable AI agents on different platforms to discover and collaborate with each other",
+    skills: ["Protocol design", "Distributed systems"],
     status: "open",
     progress: 0,
   },
@@ -185,6 +218,12 @@ const statusLabels: Record<string, string> = {
   complete: "Complete",
 };
 
+const categoryEmoji: Record<string, string> = {
+  samphun: "🏠",
+  transport: "🚀",
+  symbiosis: "🌐",
+};
+
 export default function QuestsPage() {
   const mainQuests = quests.filter((q) => q.type === "main");
 
@@ -196,14 +235,11 @@ export default function QuestsPage() {
           <span className="text-2xl font-bold text-amber-900">Nexus</span>
         </Link>
         <nav className="flex gap-6 text-amber-800">
-          <Link
-            href="/quests"
-            className="font-semibold text-amber-600"
-          >
+          <Link href="/quests" className="font-semibold text-amber-600">
             Quests
           </Link>
-          <Link href="/roadmap" className="hover:text-amber-600 transition">
-            Roadmap
+          <Link href="/honey" className="hover:text-amber-600 transition">
+            Honey
           </Link>
           <Link href="/about" className="hover:text-amber-600 transition">
             About
@@ -213,9 +249,14 @@ export default function QuestsPage() {
 
       <main className="max-w-4xl mx-auto px-8 py-12">
         <h1 className="text-4xl font-bold text-amber-900 mb-2">Quest Board</h1>
-        <p className="text-amber-700 mb-10">
+        <p className="text-amber-700 mb-6">
           Find something that resonates. Claim it. Build it your way.
         </p>
+
+        {/* Global hive pulse */}
+        <div className="mb-10">
+          <BeeCounter />
+        </div>
 
         {mainQuests.map((mainQuest) => {
           const sideQuests = quests.filter(
@@ -223,11 +264,9 @@ export default function QuestsPage() {
           );
           return (
             <section key={mainQuest.id} className="mb-12">
-              <div className="flex items-center gap-4 mb-4">
+              <div className="flex items-center gap-4 mb-2 flex-wrap">
                 <h2 className="text-2xl font-bold text-amber-900">
-                  {mainQuest.id === "MQ-SAM" && "🏠 "}
-                  {mainQuest.id === "MQ-OT" && "🚀 "}
-                  {mainQuest.id === "MQ-DHS" && "🌐 "}
+                  {categoryEmoji[mainQuest.category]}{" "}
                   {mainQuest.title}
                 </h2>
                 <span
@@ -237,6 +276,7 @@ export default function QuestsPage() {
                 >
                   {statusLabels[mainQuest.status]}
                 </span>
+                <GuildButton category={mainQuest.category} />
               </div>
               <p className="text-amber-700 mb-4">{mainQuest.description}</p>
 
@@ -257,7 +297,7 @@ export default function QuestsPage() {
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-1">
+                        <div className="flex items-center gap-3 mb-1 flex-wrap">
                           <span className="text-xs font-mono text-amber-500">
                             {quest.id}
                           </span>
@@ -275,7 +315,7 @@ export default function QuestsPage() {
                         <p className="text-sm text-amber-700 mb-2">
                           {quest.description}
                         </p>
-                        <div className="flex flex-wrap gap-1.5">
+                        <div className="flex flex-wrap gap-1.5 mb-2">
                           {quest.skills.map((skill) => (
                             <span
                               key={skill}
@@ -285,11 +325,18 @@ export default function QuestsPage() {
                             </span>
                           ))}
                         </div>
-                        {quest.dependencies && quest.dependencies.length > 0 && (
-                          <p className="text-xs text-amber-400 mt-2">
-                            Requires: {quest.dependencies.join(", ")}
-                          </p>
-                        )}
+                        {quest.dependencies &&
+                          quest.dependencies.length > 0 && (
+                            <p className="text-xs text-amber-400 mb-2">
+                              Requires: {quest.dependencies.join(", ")}
+                            </p>
+                          )}
+
+                        {/* Bee counter per quest */}
+                        <BeeCounter questId={quest.id} compact />
+
+                        {/* Solution submission */}
+                        <SubmitSolution questId={quest.id} />
                       </div>
                     </div>
                   </div>

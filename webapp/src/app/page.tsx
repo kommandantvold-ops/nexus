@@ -1,4 +1,5 @@
 import Link from "next/link";
+import BeeCounter from "@/components/BeeCounter";
 
 export default function Home() {
   return (
@@ -13,8 +14,8 @@ export default function Home() {
           <Link href="/quests" className="hover:text-amber-600 transition">
             Quests
           </Link>
-          <Link href="/roadmap" className="hover:text-amber-600 transition">
-            Roadmap
+          <Link href="/honey" className="hover:text-amber-600 transition">
+            Honey
           </Link>
           <Link href="/about" className="hover:text-amber-600 transition">
             About
@@ -140,15 +141,20 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Stats placeholder */}
-        <section className="mt-20 bg-white rounded-xl p-8 shadow-md border border-amber-100">
+        {/* Live hive pulse */}
+        <section className="mt-20">
+          <BeeCounter />
+        </section>
+
+        {/* Stats */}
+        <section className="mt-8 bg-white rounded-xl p-8 shadow-md border border-amber-100">
           <div className="grid grid-cols-3 gap-8 text-center">
             <div>
               <div className="text-3xl font-bold text-amber-600">3</div>
               <div className="text-sm text-amber-700">Mainquests</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-amber-600">12</div>
+              <div className="text-3xl font-bold text-amber-600">14</div>
               <div className="text-sm text-amber-700">Sidequests</div>
             </div>
             <div>

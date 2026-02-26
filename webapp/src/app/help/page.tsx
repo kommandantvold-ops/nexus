@@ -48,8 +48,8 @@ export default function HelpPage() {
           <Link href="/quests" className="hover:text-amber-600 transition">
             Quests
           </Link>
-          <Link href="/roadmap" className="hover:text-amber-600 transition">
-            Roadmap
+          <Link href="/honey" className="hover:text-amber-600 transition">
+            Honey
           </Link>
           <Link href="/about" className="hover:text-amber-600 transition">
             About
