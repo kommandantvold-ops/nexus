@@ -3,6 +3,7 @@ import Link from "next/link";
 import BeeCounter from "@/components/BeeCounter";
 import SubmitSolution from "@/components/SubmitSolution";
 import GuildButton from "@/components/GuildButton";
+import ClaimButton from "@/components/ClaimButton";
 
 export const metadata: Metadata = {
   title: "Quest Board | Nexus",
@@ -447,8 +448,11 @@ export default function QuestsPage() {
                             </p>
                           )}
 
-                        {/* Bee counter per quest */}
-                        <BeeCounter questId={quest.id} compact />
+                        {/* Claim + Bee counter per quest */}
+                        <div className="flex items-center gap-3 mb-1">
+                          <ClaimButton questId={quest.id} />
+                          <BeeCounter questId={quest.id} compact />
+                        </div>
 
                         {/* Solution submission */}
                         <SubmitSolution questId={quest.id} />

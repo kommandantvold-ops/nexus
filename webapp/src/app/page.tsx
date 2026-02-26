@@ -1,33 +1,11 @@
 import Link from "next/link";
 import BeeCounter from "@/components/BeeCounter";
+import Nav from "@/components/Nav";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50">
-      {/* Header */}
-      <header className="flex items-center justify-between px-8 py-6 max-w-6xl mx-auto">
-        <div className="flex items-center gap-3">
-          <span className="text-3xl">🐝</span>
-          <span className="text-2xl font-bold text-amber-900">Nexus</span>
-        </div>
-        <nav className="flex gap-6 text-amber-800">
-          <Link href="/quests" className="hover:text-amber-600 transition">
-            Quests
-          </Link>
-          <Link href="/honey" className="hover:text-amber-600 transition">
-            Honey
-          </Link>
-          <Link href="/about" className="hover:text-amber-600 transition">
-            About
-          </Link>
-          <Link href="/blog" className="hover:text-amber-600 transition">
-            Blog
-          </Link>
-          <Link href="/join" className="hover:text-amber-600 transition">
-            Join
-          </Link>
-        </nav>
-      </header>
+      <Nav />
 
       {/* Hero */}
       <main className="max-w-4xl mx-auto px-8 py-20 text-center">
