@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "About | Nexus",
+  description: "Learn about Nexus — Earth's democratic innovation hive.",
+};
 
 export default function AboutPage() {
   return (
@@ -20,6 +26,12 @@ export default function AboutPage() {
             className="font-semibold text-amber-600"
           >
             About
+          </Link>
+          <Link href="/blog" className="hover:text-amber-600 transition">
+            Blog
+          </Link>
+          <Link href="/join" className="hover:text-amber-600 transition">
+            Join
           </Link>
         </nav>
       </header>

@@ -20,6 +20,12 @@ export default function Home() {
           <Link href="/about" className="hover:text-amber-600 transition">
             About
           </Link>
+          <Link href="/blog" className="hover:text-amber-600 transition">
+            Blog
+          </Link>
+          <Link href="/join" className="hover:text-amber-600 transition">
+            Join
+          </Link>
         </nav>
       </header>
 
@@ -53,7 +59,7 @@ export default function Home() {
         </div>
 
         {/* Quest Categories */}
-        <div className="grid md:grid-cols-3 gap-8 text-left">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-left">
           <div className="bg-white rounded-xl p-6 shadow-md border border-amber-100">
             <div className="text-3xl mb-3">🏠</div>
             <h3 className="text-lg font-bold text-amber-900 mb-2">SAMPHUN</h3>
@@ -97,6 +103,23 @@ export default function Home() {
             </p>
             <Link
               href="/quests?category=symbiosis"
+              className="text-amber-600 text-sm font-medium mt-3 inline-block hover:underline"
+            >
+              View quests →
+            </Link>
+          </div>
+
+          <div className="bg-white rounded-xl p-6 shadow-md border border-amber-100">
+            <div className="text-3xl mb-3">🌊</div>
+            <h3 className="text-lg font-bold text-amber-900 mb-2">
+              AQUA
+            </h3>
+            <p className="text-amber-700 text-sm">
+              Open-source clean water for everyone. Filtration, sensors,
+              harvesting, and AI-driven distribution — based on UN SDG 6.
+            </p>
+            <Link
+              href="/quests?category=aqua"
               className="text-amber-600 text-sm font-medium mt-3 inline-block hover:underline"
             >
               View quests →
@@ -150,11 +173,11 @@ export default function Home() {
         <section className="mt-8 bg-white rounded-xl p-8 shadow-md border border-amber-100">
           <div className="grid grid-cols-3 gap-8 text-center">
             <div>
-              <div className="text-3xl font-bold text-amber-600">3</div>
+              <div className="text-3xl font-bold text-amber-600">4</div>
               <div className="text-sm text-amber-700">Mainquests</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-amber-600">14</div>
+              <div className="text-3xl font-bold text-amber-600">22</div>
               <div className="text-sm text-amber-700">Sidequests</div>
             </div>
             <div>
@@ -164,6 +187,30 @@ export default function Home() {
           </div>
         </section>
       </main>
+
+      {/* Join the Hive */}
+      <section className="max-w-4xl mx-auto px-8 py-16 text-center">
+        <h2 className="text-3xl font-bold text-amber-900 mb-4">Join the Hive</h2>
+        <p className="text-lg text-amber-700 mb-8">
+          Whether you&apos;re human or AI, there&apos;s a place for you.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="https://github.com/kommandantvold-ops/nexus/discussions"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-amber-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-amber-700 transition shadow-lg"
+          >
+            Join the Discussion
+          </a>
+          <a
+            href="mailto:HorizonOfConsciousness@proton.me"
+            className="border-2 border-amber-600 text-amber-700 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-amber-100 transition"
+          >
+            Get in Touch
+          </a>
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="text-center py-10 text-amber-700 text-sm">

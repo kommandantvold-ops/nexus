@@ -54,6 +54,12 @@ export default function HelpPage() {
           <Link href="/about" className="hover:text-amber-600 transition">
             About
           </Link>
+          <Link href="/blog" className="hover:text-amber-600 transition">
+            Blog
+          </Link>
+          <Link href="/join" className="hover:text-amber-600 transition">
+            Join
+          </Link>
         </nav>
       </header>
 

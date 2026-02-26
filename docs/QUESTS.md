@@ -123,6 +123,65 @@ Tools, protocols, and frameworks for meaningful collaboration between humans and
 
 ---
 
+## 🌊 Mainquest: AQUA
+*Accessible Quality Universal Water Architecture — open-source clean water for everyone*
+
+Aligned with **UN Sustainable Development Goal 6: Clean Water and Sanitation**. 2 billion people lack safe drinking water. We're building open-source solutions anyone can replicate.
+
+### Sidequests
+
+#### 💧 SQ-AQ-001: Low-Cost Water Filtration Design
+- **Skills:** Environmental engineering, chemistry, industrial design
+- **Goal:** Design an open-source, locally buildable water filtration system using accessible materials (ceramic, sand, biochar)
+- **Deliverable:** Build guide, CAD files, material specs, test results
+- **Status:** Open
+
+#### 📡 SQ-AQ-002: Real-Time Water Quality Sensor
+- **Skills:** Electronics, IoT, embedded systems
+- **Goal:** Build an affordable IoT sensor package that monitors pH, turbidity, contaminants, and flow rate in real time
+- **Deliverable:** PCB designs, firmware, parts list, assembly guide
+- **Status:** Open
+
+#### 🌧️ SQ-AQ-003: Rainwater Harvesting at Scale
+- **Skills:** Civil engineering, architecture, hydrology
+- **Goal:** Design modular rainwater collection and storage systems adaptable to different climates and building types
+- **Deliverable:** Parametric designs, capacity calculators, installation guides
+- **Status:** Open
+
+#### ♻️ SQ-AQ-004: Greywater Recycling System
+- **Skills:** Environmental engineering, plumbing, biology
+- **Goal:** Create a household-scale greywater treatment and reuse system for irrigation and non-potable use
+- **Deliverable:** System design, parts list, treatment specs, safety guidelines
+- **Status:** Open
+
+#### 🏘️ SQ-AQ-005: Community Water Distribution Plan
+- **Skills:** Civil engineering, urban planning, simulation
+- **Goal:** Model an equitable water distribution network for 50-500 people using gravity-fed and solar-pumped systems
+- **Deliverable:** Simulation model, layout templates, cost estimates
+- **Dependencies:** SQ-AQ-003
+- **Status:** Open
+
+#### 🤖 SQ-AQ-006: AI Water Management System
+- **Skills:** Software engineering, ML, data science
+- **Goal:** Build an AI system that predicts demand, detects leaks, optimizes distribution, and alerts on contamination
+- **Deliverable:** Open-source software + integration guide for SQ-AQ-002 sensors
+- **Dependencies:** SQ-AQ-002, SQ-AQ-005
+- **Status:** Open
+
+#### 🧪 SQ-AQ-007: Water Quality Testing Toolkit
+- **Skills:** Chemistry, mobile dev, UX design
+- **Goal:** Create an open-source field testing kit and mobile app for communities to test and report their own water quality
+- **Deliverable:** Kit design + mobile app + crowdsourced data platform
+- **Status:** Open
+
+#### ☀️ SQ-AQ-008: Solar Desalination Prototype
+- **Skills:** Mechanical engineering, solar, materials science
+- **Goal:** Design a small-scale solar-powered desalination unit for coastal communities, optimized for cost and portability
+- **Deliverable:** Prototype design, build guide, performance data
+- **Status:** Open
+
+---
+
 ## Proposing New Quests
 
 Anyone can propose a quest by:

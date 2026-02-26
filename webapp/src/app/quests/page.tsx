@@ -1,7 +1,13 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import BeeCounter from "@/components/BeeCounter";
 import SubmitSolution from "@/components/SubmitSolution";
 import GuildButton from "@/components/GuildButton";
+
+export const metadata: Metadata = {
+  title: "Quest Board | Nexus",
+  description: "Browse and claim quests to help solve Earth's biggest challenges.",
+};
 
 interface Quest {
   id: string;
@@ -202,6 +208,108 @@ const quests: Quest[] = [
     status: "open",
     progress: 0,
   },
+  // AQUA — SDG 6: Clean Water and Sanitation
+  {
+    id: "MQ-AQUA",
+    title: "AQUA",
+    type: "main",
+    category: "aqua",
+    description:
+      "Accessible Quality Universal Water Architecture — open-source clean water for everyone",
+    skills: [],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-AQ-001",
+    title: "Low-Cost Water Filtration Design",
+    type: "side",
+    category: "aqua",
+    description:
+      "Design an open-source, locally buildable water filtration system using accessible materials (ceramic, sand, biochar)",
+    skills: ["Environmental engineering", "Chemistry", "Industrial design"],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-AQ-002",
+    title: "Real-Time Water Quality Sensor",
+    type: "side",
+    category: "aqua",
+    description:
+      "Build an affordable IoT sensor package that monitors pH, turbidity, contaminants, and flow rate in real time",
+    skills: ["Electronics", "IoT", "Embedded systems"],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-AQ-003",
+    title: "Rainwater Harvesting at Scale",
+    type: "side",
+    category: "aqua",
+    description:
+      "Design modular rainwater collection and storage systems adaptable to different climates and building types",
+    skills: ["Civil engineering", "Architecture", "Hydrology"],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-AQ-004",
+    title: "Greywater Recycling System",
+    type: "side",
+    category: "aqua",
+    description:
+      "Create a household-scale greywater treatment and reuse system for irrigation and non-potable use",
+    skills: ["Environmental engineering", "Plumbing", "Biology"],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-AQ-005",
+    title: "Community Water Distribution Plan",
+    type: "side",
+    category: "aqua",
+    description:
+      "Model an equitable water distribution network for a community of 50-500 people using gravity-fed and solar-pumped systems",
+    skills: ["Civil engineering", "Urban planning", "Simulation"],
+    status: "open",
+    progress: 0,
+    dependencies: ["SQ-AQ-003"],
+  },
+  {
+    id: "SQ-AQ-006",
+    title: "AI Water Management System",
+    type: "side",
+    category: "aqua",
+    description:
+      "Build an AI system that predicts demand, detects leaks, optimizes distribution, and alerts on contamination using sensor data",
+    skills: ["Software engineering", "ML", "Data science"],
+    status: "open",
+    progress: 0,
+    dependencies: ["SQ-AQ-002", "SQ-AQ-005"],
+  },
+  {
+    id: "SQ-AQ-007",
+    title: "Water Quality Testing Toolkit",
+    type: "side",
+    category: "aqua",
+    description:
+      "Create an open-source field testing kit and mobile app for communities to test and report their own water quality",
+    skills: ["Chemistry", "Mobile dev", "UX design"],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-AQ-008",
+    title: "Solar Desalination Prototype",
+    type: "side",
+    category: "aqua",
+    description:
+      "Design a small-scale solar-powered desalination unit for coastal communities, optimized for cost and portability",
+    skills: ["Mechanical engineering", "Solar", "Materials science"],
+    status: "open",
+    progress: 0,
+  },
 ];
 
 const statusColors: Record<string, string> = {
@@ -222,6 +330,7 @@ const categoryEmoji: Record<string, string> = {
   samphun: "🏠",
   transport: "🚀",
   symbiosis: "🌐",
+  aqua: "🌊",
 };
 
 export default function QuestsPage() {
@@ -243,6 +352,12 @@ export default function QuestsPage() {
           </Link>
           <Link href="/about" className="hover:text-amber-600 transition">
             About
+          </Link>
+          <Link href="/blog" className="hover:text-amber-600 transition">
+            Blog
+          </Link>
+          <Link href="/join" className="hover:text-amber-600 transition">
+            Join
           </Link>
         </nav>
       </header>
