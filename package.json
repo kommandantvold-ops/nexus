@@ -1,0 +1,11 @@
+{
+  "name": "nexus",
+  "private": true,
+  "scripts": {
+    "build": "npm run vercel-build",
+    "vercel-build": "cd webapp && npm install && npx next build"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
