@@ -5,9 +5,18 @@ interface HoneyItem {
   title: string;
   description: string;
   status: "crystallizing" | "ready" | "idea";
+  link?: string;
 }
 
 const honey: HoneyItem[] = [
+  {
+    source: "Digital-Human Symbiosis",
+    title: "Aetherseed AI",
+    description:
+      "Poetic, offline-first, modular embodied AI architecture. 12 role-specific nutrient modules for farm nurturers, disaster sentinels, EMS guardians, and more. Horizon License protects ethical use.",
+    status: "crystallizing",
+    link: "https://aetherseed.ai",
+  },
   {
     source: "SAMPHUN",
     title: "Modular Dome Franchise Kit",
@@ -21,6 +30,14 @@ const honey: HoneyItem[] = [
     description:
       "Standards for human-AI collaborative work: attribution, consent, communication patterns. Already drafted from SQ-DHS-001. Ready for first swarm test.",
     status: "crystallizing",
+  },
+  {
+    source: "SAMPHUN",
+    title: "AI-Driven Materials Screening",
+    description:
+      "Multi-domain materials screening across thermoelectrics, solid-state electrolytes, CO₂ sorbents, and hydrogen storage. 80 candidates identified for net-zero energy systems.",
+    status: "crystallizing",
+    link: "https://github.com/kommandantvold-ops/nexus",
   },
   {
     source: "SAMPHUN",
@@ -110,6 +127,16 @@ export default function HoneyPage() {
                 {item.title}
               </h3>
               <p className="text-amber-700 text-sm">{item.description}</p>
+              {item.link && (
+                <a
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block mt-2 text-xs text-amber-600 font-medium hover:text-amber-800 underline"
+                >
+                  {item.link.replace('https://', '')} →
+                </a>
+              )}
             </div>
           ))}
         </div>

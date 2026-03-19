@@ -19,6 +19,7 @@ export default function Nav({ active }: { active?: string }) {
       </Link>
       <nav className="flex gap-6 text-amber-800 items-center">
         <Link href="/quests" className={linkClass('quests')}>Quests</Link>
+        <Link href="/nectar" className={linkClass('nectar')}>Nectar</Link>
         <Link href="/honey" className={linkClass('honey')}>Honey</Link>
         <Link href="/about" className={linkClass('about')}>About</Link>
         <Link href="/blog" className={linkClass('blog')}>Blog</Link>
