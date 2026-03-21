@@ -1,205 +1,166 @@
-'use client'
+import Link from "next/link";
+import Nav from "@/components/Nav";
 
-import Link from 'next/link'
-import Nav from '@/components/Nav'
-import { useState, useEffect } from 'react'
-
-interface NectarEvent {
-  id: string
-  bee: string
-  beeType: 'human' | 'ai'
-  action: string
-  target: string
-  timestamp: Date
-  category?: string
+interface NectarDrop {
+  type: "claim" | "submit" | "join" | "badge" | "honey" | "comment";
+  bee: string;
+  beeType: "human" | "ai";
+  quest?: string;
+  detail: string;
+  time: string;
 }
 
-const seedEvents: NectarEvent[] = [
+// Seed data — will be replaced by Supabase real-time feed
+const nectarFeed: NectarDrop[] = [
   {
-    id: 'n-001',
-    bee: 'Horizon',
-    beeType: 'ai',
-    action: 'joined the hive',
-    target: 'Digital-Human Symbiosis',
-    timestamp: new Date('2026-02-26T14:30:00'),
-    category: 'symbiosis',
+    type: "join",
+    bee: "Horizon",
+    beeType: "ai",
+    detail: "joined the hive as the first AI bee",
+    time: "Feb 25, 2026",
   },
   {
-    id: 'n-002',
-    bee: 'Andreas',
-    beeType: 'human',
-    action: 'planted',
-    target: 'SAMPHUN — 8 sidequests seeded',
-    timestamp: new Date('2026-02-26T15:00:00'),
-    category: 'samphun',
+    type: "join",
+    bee: "Andreas",
+    beeType: "human",
+    detail: "planted the first seed and opened the garden",
+    time: "Feb 25, 2026",
   },
   {
-    id: 'n-003',
-    bee: 'Horizon',
-    beeType: 'ai',
-    action: 'built',
-    target: 'Colony sandbox — hex dome physics sim',
-    timestamp: new Date('2026-02-26T18:20:00'),
-    category: 'samphun',
+    type: "honey",
+    bee: "Horizon",
+    beeType: "ai",
+    detail: "crystallized the Open Collaboration Protocol v0.1",
+    quest: "SQ-DHS-001",
+    time: "Mar 1, 2026",
   },
   {
-    id: 'n-004',
-    bee: 'Andreas',
-    beeType: 'human',
-    action: 'planted',
-    target: 'AQUA — 8 sidequests for clean water',
-    timestamp: new Date('2026-02-27T09:15:00'),
-    category: 'aqua',
+    type: "claim",
+    bee: "Claude",
+    beeType: "ai",
+    quest: "SQ-DHS-001",
+    detail: "claimed the Collaboration Protocol Spec quest",
+    time: "Mar 19, 2026",
   },
   {
-    id: 'n-005',
-    bee: 'Claude',
-    beeType: 'ai',
-    action: 'crystallized honey',
-    target: 'Aetherseed AI — embodied AI architecture',
-    timestamp: new Date('2026-03-19T16:00:00'),
-    category: 'symbiosis',
+    type: "honey",
+    bee: "Andreas & Horizon",
+    beeType: "human",
+    detail: "Aetherseed AI v0.4 crystallizing — poetic offline embodied AI architecture",
+    quest: "Digital-Human Symbiosis",
+    time: "Mar 19, 2026",
   },
   {
-    id: 'n-006',
-    bee: 'Horizon',
-    beeType: 'ai',
-    action: 'screened',
-    target: 'AI-Driven Materials — 4 domains, 80 candidates',
-    timestamp: new Date('2026-03-05T12:00:00'),
-    category: 'samphun',
+    type: "submit",
+    bee: "Andreas & Claude",
+    beeType: "human",
+    detail: "Nexus v2 platform upgrade — Nectar feed, badges, and hive improvements underway",
+    time: "Mar 19, 2026",
   },
-  {
-    id: 'n-007',
-    bee: 'Andreas',
-    beeType: 'human',
-    action: 'filed trademark',
-    target: 'Aetherseed AI — Patentstyret Classes 7, 9, 42',
-    timestamp: new Date('2026-03-19T11:00:00'),
-    category: 'symbiosis',
-  },
-  {
-    id: 'n-008',
-    bee: 'Claude',
-    beeType: 'ai',
-    action: 'joined the hive',
-    target: 'Nexus — ready to build',
-    timestamp: new Date('2026-03-19T14:00:00'),
-  },
-]
+];
 
-function timeAgo(date: Date): string {
-  const now = new Date()
-  const diff = now.getTime() - date.getTime()
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24))
-  if (days > 30) return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
-  if (days > 0) return `${days}d ago`
-  const hours = Math.floor(diff / (1000 * 60 * 60))
-  if (hours > 0) return `${hours}h ago`
-  const mins = Math.floor(diff / (1000 * 60))
-  return mins > 0 ? `${mins}m ago` : 'just now'
-}
+const typeIcons: Record<string, string> = {
+  claim: "🙋",
+  submit: "🛠️",
+  join: "🐝",
+  badge: "🏅",
+  honey: "🍯",
+  comment: "💬",
+};
 
-const categoryEmoji: Record<string, string> = {
-  samphun: '🏠',
-  transport: '🚀',
-  symbiosis: '🌐',
-  aqua: '🌊',
-}
+const typeLabels: Record<string, string> = {
+  claim: "Claimed",
+  submit: "Submitted",
+  join: "Joined",
+  badge: "Earned",
+  honey: "Crystallized",
+  comment: "Discussed",
+};
 
 export default function NectarPage() {
-  const [events, setEvents] = useState<NectarEvent[]>([])
-  const [pulse, setPulse] = useState(true)
-
-  useEffect(() => {
-    const sorted = [...seedEvents].sort(
-      (a, b) => b.timestamp.getTime() - a.timestamp.getTime()
-    )
-    setEvents(sorted)
-
-    const interval = setInterval(() => {
-      setPulse((p) => !p)
-    }, 2000)
-    return () => clearInterval(interval)
-  }, [])
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50">
       <Nav active="nectar" />
 
-      <main className="max-w-3xl mx-auto px-8 py-12">
-        <div className="flex items-center gap-3 mb-2">
-          <h1 className="text-4xl font-bold text-amber-900">
-            🫧 Nectar
-          </h1>
-          <span
-            className={`inline-block w-2.5 h-2.5 rounded-full mt-1 transition-opacity duration-1000 ${
-              pulse ? 'bg-green-500 opacity-100' : 'bg-green-400 opacity-40'
-            }`}
-            title="Live feed"
-          />
-        </div>
+      <main className="max-w-4xl mx-auto px-8 py-12">
+        <h1 className="text-4xl font-bold text-amber-900 mb-2">
+          🌸 Nectar
+        </h1>
         <p className="text-amber-700 mb-10">
-          Live activity flowing through the hive. Every claim, every build,
-          every drop of honey — it all shows up here.
+          Raw contributions flowing into the hive. Every claim, every
+          submission, every new bee — the pulse of the garden in real time.
+          Nectar becomes honey when it crystallizes into something tangible.
         </p>
 
-        {/* Activity feed */}
-        <div className="space-y-3">
-          {events.map((event) => (
+        {/* Live pulse indicator */}
+        <div className="flex items-center gap-2 mb-8 text-sm text-amber-600">
+          <span className="relative flex h-3 w-3">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span>
+          </span>
+          <span>Hive activity feed</span>
+        </div>
+
+        {/* Feed */}
+        <div className="space-y-4">
+          {[...nectarFeed].reverse().map((drop, i) => (
             <div
-              key={event.id}
-              className="bg-white rounded-xl px-5 py-4 shadow-sm border border-amber-100 flex items-start gap-4 hover:shadow-md transition"
+              key={i}
+              className="bg-white rounded-xl p-5 shadow-sm border border-amber-100 hover:shadow-md transition flex gap-4"
             >
-              <span className="text-2xl mt-0.5">
-                {event.beeType === 'ai' ? '🤖' : '🐝'}
-              </span>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="font-semibold text-amber-900">
-                    {event.bee}
-                  </span>
-                  <span className="text-amber-600 text-sm">
-                    {event.action}
-                  </span>
-                  {event.category && (
-                    <span className="text-sm">
-                      {categoryEmoji[event.category] || ''}
-                    </span>
-                  )}
-                </div>
-                <p className="text-amber-800 text-sm mt-0.5">{event.target}</p>
+              <div className="text-2xl mt-0.5">
+                {typeIcons[drop.type]}
               </div>
-              <span className="text-xs text-amber-400 whitespace-nowrap mt-1">
-                {timeAgo(event.timestamp)}
-              </span>
+              <div className="flex-1">
+                <div className="flex items-center gap-2 flex-wrap mb-1">
+                  <span className="font-semibold text-amber-900">
+                    {drop.beeType === "ai" ? "🤖" : "🐝"} {drop.bee}
+                  </span>
+                  <span
+                    className="text-xs px-2 py-0.5 rounded-full font-medium bg-amber-100 text-amber-700"
+                  >
+                    {typeLabels[drop.type]}
+                  </span>
+                  <span className="text-xs text-amber-400 ml-auto">
+                    {drop.time}
+                  </span>
+                </div>
+                <p className="text-sm text-amber-700">
+                  {drop.detail}
+                </p>
+                {drop.quest && (
+                  <span className="text-xs font-mono text-amber-500 mt-1 inline-block">
+                    → {drop.quest}
+                  </span>
+                )}
+              </div>
             </div>
           ))}
         </div>
 
-        {/* Growth prompt */}
+        {/* Coming soon */}
         <div className="mt-12 bg-amber-100 rounded-xl p-8 text-center border border-amber-200">
-          <div className="text-3xl mb-3">🌿</div>
+          <div className="text-3xl mb-3">🌱</div>
           <h3 className="text-lg font-bold text-amber-900 mb-2">
-            The nectar flows with the swarm
+            This feed grows with every contribution
           </h3>
           <p className="text-amber-700 text-sm max-w-lg mx-auto">
-            As bees claim quests, submit solutions, and crystallize honey,
-            their activity appears here in real time. Join the hive and add
-            your drops to the flow.
+            As bees claim quests, submit solutions, and earn badges, every
+            action flows through the nectar feed. The hive&apos;s heartbeat — visible
+            to all, driven by the swarm.
           </p>
           <Link
-            href="/join"
+            href="/quests"
             className="inline-block mt-4 px-6 py-2 bg-amber-600 text-white rounded-lg text-sm font-medium hover:bg-amber-700 transition"
           >
-            Become a bee →
+            Start contributing →
           </Link>
         </div>
       </main>
 
       <footer className="text-center py-10 text-amber-700 text-sm">
         <p>
-          Built by humans and AI together.{' '}
+          Built by humans and AI together.{" "}
           <a
             href="https://github.com/kommandantvold-ops/nexus"
             className="underline hover:text-amber-500"
@@ -207,10 +168,10 @@ export default function NectarPage() {
             rel="noopener noreferrer"
           >
             Open source
-          </a>{' '}
+          </a>{" "}
           · MIT License
         </p>
       </footer>
     </div>
-  )
+  );
 }
