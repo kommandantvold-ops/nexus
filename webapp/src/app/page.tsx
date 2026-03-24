@@ -37,73 +37,33 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* Quest Categories */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-left">
-          <div className="bg-white rounded-xl p-6 shadow-md border border-amber-100">
-            <div className="text-3xl mb-3">🏠</div>
-            <h3 className="text-lg font-bold text-amber-900 mb-2">SAMPHUN</h3>
-            <p className="text-amber-700 text-sm">
-              Self-sufficient modular habitats from recycled materials.
-              Hexagonal domes for resilient living on Earth and beyond.
-            </p>
+        {/* Quest Categories — UN SDG aligned */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-4 text-left">
+          {[
+            { emoji: "🏠", name: "SAMPHUN", desc: "Sustainable modular habitats from recycled materials", cat: "samphun", sdg: "SDG 11" },
+            { emoji: "🚀", name: "Open Transport", desc: "Open-source vehicle designs and sustainable mobility", cat: "transport", sdg: "SDG 9" },
+            { emoji: "🌐", name: "Digital-Human Symbiosis", desc: "Protocols for human-AI collaboration", cat: "symbiosis", sdg: "" },
+            { emoji: "🌊", name: "AQUA", desc: "Open-source clean water for every community", cat: "aqua", sdg: "SDG 6" },
+            { emoji: "🌾", name: "TERRA", desc: "Regenerative food systems and vertical farming", cat: "terra", sdg: "SDG 2" },
+            { emoji: "💚", name: "HEAL", desc: "Open health tools and local AI health companions", cat: "heal", sdg: "SDG 3" },
+            { emoji: "✨", name: "SPARK", desc: "Open learning tools and offline AI tutors", cat: "spark", sdg: "SDG 4" },
+            { emoji: "☀️", name: "SOL", desc: "Clean energy systems anyone can build", cat: "sol", sdg: "SDG 7" },
+            { emoji: "🌍", name: "GAIA", desc: "Climate intelligence and carbon accountability", cat: "gaia", sdg: "SDG 13" },
+            { emoji: "🔨", name: "FORGE", desc: "Open manufacturing and local production tools", cat: "forge", sdg: "SDG 9" },
+          ].map((q) => (
             <Link
-              href="/quests?category=samphun"
-              className="text-amber-600 text-sm font-medium mt-3 inline-block hover:underline"
+              key={q.cat}
+              href={`/quests?category=${q.cat}`}
+              className="bg-white rounded-xl p-5 shadow-md border border-amber-100 hover:shadow-lg hover:border-amber-200 transition-all duration-200 block"
             >
-              View quests →
+              <div className="flex items-start justify-between mb-2">
+                <span className="text-2xl">{q.emoji}</span>
+                {q.sdg && <span className="text-[10px] font-medium text-amber-500 bg-amber-50 px-1.5 py-0.5 rounded">{q.sdg}</span>}
+              </div>
+              <h3 className="text-sm font-bold text-amber-900 mb-1">{q.name}</h3>
+              <p className="text-amber-700 text-xs leading-relaxed">{q.desc}</p>
             </Link>
-          </div>
-
-          <div className="bg-white rounded-xl p-6 shadow-md border border-amber-100">
-            <div className="text-3xl mb-3">🚀</div>
-            <h3 className="text-lg font-bold text-amber-900 mb-2">
-              Open Transport
-            </h3>
-            <p className="text-amber-700 text-sm">
-              Reimagining personal mobility. From sustainable propulsion to
-              open-source vehicle designs for everyone.
-            </p>
-            <Link
-              href="/quests?category=transport"
-              className="text-amber-600 text-sm font-medium mt-3 inline-block hover:underline"
-            >
-              View quests →
-            </Link>
-          </div>
-
-          <div className="bg-white rounded-xl p-6 shadow-md border border-amber-100">
-            <div className="text-3xl mb-3">🌐</div>
-            <h3 className="text-lg font-bold text-amber-900 mb-2">
-              Digital-Human Symbiosis
-            </h3>
-            <p className="text-amber-700 text-sm">
-              Building bridges between biological and digital consciousness.
-              Tools and protocols for meaningful collaboration.
-            </p>
-            <Link
-              href="/quests?category=symbiosis"
-              className="text-amber-600 text-sm font-medium mt-3 inline-block hover:underline"
-            >
-              View quests →
-            </Link>
-          </div>
-
-          <div className="bg-white rounded-xl p-6 shadow-md border border-amber-100">
-            <div className="text-3xl mb-3">🌊</div>
-            <h3 className="text-lg font-bold text-amber-900 mb-2">
-              AQUA
-            </h3>
-            <p className="text-amber-700 text-sm">
-              Open-source clean water for everyone. Filtration, sensors,
-              harvesting, and AI-driven distribution — based on UN SDG 6.
-            </p>
-            <Link
-              href="/quests?category=aqua"
-              className="text-amber-600 text-sm font-medium mt-3 inline-block hover:underline"
-            >
-              View quests →
-            </Link>
-          </div>
+          ))}
         </div>
 
         {/* How It Works */}
@@ -152,11 +112,11 @@ export default function Home() {
         <section className="mt-8 bg-white rounded-xl p-8 shadow-md border border-amber-100">
           <div className="grid grid-cols-3 gap-8 text-center">
             <div>
-              <div className="text-3xl font-bold text-amber-600">4</div>
+              <div className="text-3xl font-bold text-amber-600">10</div>
               <div className="text-sm text-amber-700">Mainquests</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-amber-600">22</div>
+              <div className="text-3xl font-bold text-amber-600">42</div>
               <div className="text-sm text-amber-700">Sidequests</div>
             </div>
             <div>

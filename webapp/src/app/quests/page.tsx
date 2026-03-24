@@ -313,6 +313,298 @@ const quests: Quest[] = [
     status: "open",
     progress: 0,
   },
+  // TERRA — SDG 2: Zero Hunger
+  {
+    id: "MQ-TERRA",
+    title: "TERRA",
+    type: "main",
+    category: "terra",
+    description:
+      "Transparent Earth-Regenerative Resource Architecture — open-source food systems for all",
+    skills: [],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-TR-001",
+    title: "Open-Source Vertical Farm Design",
+    type: "side",
+    category: "terra",
+    description:
+      "Design a modular, low-cost vertical farming unit that fits in a shipping container or small room",
+    skills: ["Agriculture", "Hydroponics", "CAD", "LED lighting"],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-TR-002",
+    title: "AI Crop Health Monitor",
+    type: "side",
+    category: "terra",
+    description:
+      "Build a local AI system using camera + Aetherseed that detects plant disease, nutrient deficiency, and pests — runs offline on Pi 5",
+    skills: ["Computer vision", "ML", "Agriculture", "Embedded systems"],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-TR-003",
+    title: "Soil Regeneration Protocol",
+    type: "side",
+    category: "terra",
+    description:
+      "Document and test regenerative agriculture techniques that restore depleted soil using open methods",
+    skills: ["Soil science", "Biology", "Research"],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-TR-004",
+    title: "Community Seed Library Platform",
+    type: "side",
+    category: "terra",
+    description:
+      "Build an open platform for communities to share, track, and preserve local seed varieties",
+    skills: ["Web dev", "Database design", "Agriculture"],
+    status: "open",
+    progress: 0,
+  },
+  // HEAL — SDG 3: Good Health and Well-being
+  {
+    id: "MQ-HEAL",
+    title: "HEAL",
+    type: "main",
+    category: "heal",
+    description:
+      "Health Equity through Accessible Local intelligence — open health tools for every community",
+    skills: [],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-HL-001",
+    title: "Personal Health AI Assistant",
+    type: "side",
+    category: "heal",
+    description:
+      "Build a local, privacy-preserving AI health companion using Aetherseed — honest about what it knows and doesn't know, never gives dangerous advice",
+    skills: ["ML", "Medical knowledge", "Privacy engineering"],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-HL-002",
+    title: "Open Vital Signs Monitor",
+    type: "side",
+    category: "heal",
+    description:
+      "Design an affordable, open-source vital signs monitoring kit (heart rate, SpO2, temperature) for community health workers",
+    skills: ["Electronics", "Biomedical engineering", "Embedded systems"],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-HL-003",
+    title: "Mental Health Check-In Companion",
+    type: "side",
+    category: "heal",
+    description:
+      "Create a gentle, offline AI companion for daily mental health check-ins — using Aetherseed's Gentle Care nutrient, runs locally with full privacy",
+    skills: ["Psychology", "UX design", "AI ethics"],
+    status: "open",
+    progress: 0,
+  },
+  // SPARK — SDG 4: Quality Education
+  {
+    id: "MQ-SPARK",
+    title: "SPARK",
+    type: "main",
+    category: "spark",
+    description:
+      "Shared Pathways for Accessible, Resilient Knowledge — open learning tools for everyone",
+    skills: [],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-SP-001",
+    title: "Offline AI Tutor (Wonder Teacher)",
+    type: "side",
+    category: "spark",
+    description:
+      "Deploy Aetherseed's Wonder Teacher nutrient as a standalone offline tutor that runs on a Pi — honest, patient, and age-appropriate",
+    skills: ["Education", "AI", "UX design"],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-SP-002",
+    title: "Open Curriculum Builder",
+    type: "side",
+    category: "spark",
+    description:
+      "Build a platform where educators can collaboratively create, share, and localize curricula — free and open-source",
+    skills: ["Web dev", "Education", "i18n"],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-SP-003",
+    title: "Citizen Science Quest Kit",
+    type: "side",
+    category: "spark",
+    description:
+      "Create structured science experiments that anyone can run with household materials, with AI-assisted data collection and analysis",
+    skills: ["Science education", "Mobile dev", "Data science"],
+    status: "open",
+    progress: 0,
+  },
+  // SOL — SDG 7: Affordable and Clean Energy
+  {
+    id: "MQ-SOL",
+    title: "SOL",
+    type: "main",
+    category: "sol",
+    description:
+      "Sustainable Open-source Local energy — clean power systems anyone can build and maintain",
+    skills: [],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-SOL-001",
+    title: "DIY Solar Panel Assembly Guide",
+    type: "side",
+    category: "sol",
+    description:
+      "Create a comprehensive open-source guide for assembling solar panels from commodity cells — including testing and safety",
+    skills: ["Electrical engineering", "Solar", "Technical writing"],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-SOL-002",
+    title: "Community Microgrid Simulator",
+    type: "side",
+    category: "sol",
+    description:
+      "Build a simulation tool for designing neighborhood-scale microgrids — model generation, storage, demand, and sharing",
+    skills: ["Electrical engineering", "Simulation", "Software engineering"],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-SOL-003",
+    title: "AI Energy Optimizer",
+    type: "side",
+    category: "sol",
+    description:
+      "Build a local AI system that optimizes household energy use — schedules appliances, manages battery storage, minimizes waste",
+    skills: ["ML", "IoT", "Embedded systems"],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-SOL-004",
+    title: "Open Thermoelectric Waste Heat Recovery",
+    type: "side",
+    category: "sol",
+    description:
+      "Apply Horizon's materials screening research to build a practical thermoelectric module that recovers waste heat from industrial or household sources",
+    skills: ["Materials science", "Electrical engineering", "Physics"],
+    status: "open",
+    progress: 0,
+  },
+  // GAIA — SDG 13: Climate Action
+  {
+    id: "MQ-GAIA",
+    title: "GAIA",
+    type: "main",
+    category: "gaia",
+    description:
+      "Global AI-Integrated Awareness — open climate intelligence and carbon accountability tools",
+    skills: [],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-GA-001",
+    title: "Personal Carbon Footprint Tracker",
+    type: "side",
+    category: "gaia",
+    description:
+      "Build an honest, local AI tool that tracks personal carbon footprint — no guilt-tripping, just clear data and actionable suggestions",
+    skills: ["Data science", "UX design", "Environmental science"],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-GA-002",
+    title: "Open CO₂ Sorbent Testing",
+    type: "side",
+    category: "gaia",
+    description:
+      "Validate Horizon's AI-screened CO₂ sorbent candidates (MOF-74, UiO-66-NH2) through community-distributed experiments",
+    skills: ["Chemistry", "Materials science", "Lab work"],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-GA-003",
+    title: "Climate Data Visualization Dashboard",
+    type: "side",
+    category: "gaia",
+    description:
+      "Build an open-source dashboard that visualizes local climate data, trends, and projections — accessible to non-scientists",
+    skills: ["Data visualization", "Web dev", "Climate science"],
+    status: "open",
+    progress: 0,
+  },
+  // FORGE — SDG 9: Industry, Innovation and Infrastructure
+  {
+    id: "MQ-FORGE",
+    title: "FORGE",
+    type: "main",
+    category: "forge",
+    description:
+      "Free Open-source Resilient Generative Engineering — open manufacturing tools and designs for local production",
+    skills: [],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-FG-001",
+    title: "Open 3D Print Farm Controller",
+    type: "side",
+    category: "forge",
+    description:
+      "Build an AI-managed print farm controller using Aetherseed — monitors prints, detects failures, optimizes queues, runs on Pi 5",
+    skills: ["3D printing", "Software engineering", "Computer vision"],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-FG-002",
+    title: "Parametric Design Library",
+    type: "side",
+    category: "forge",
+    description:
+      "Create a library of parametric, customizable open-source designs for everyday objects — adaptable to local needs and materials",
+    skills: ["CAD", "Industrial design", "3D printing"],
+    status: "open",
+    progress: 0,
+  },
+  {
+    id: "SQ-FG-003",
+    title: "Local Manufacturing Feasibility Tool",
+    type: "side",
+    category: "forge",
+    description:
+      "Build a tool that helps communities assess what they can manufacture locally vs. what they need to import — based on available equipment, skills, and materials",
+    skills: ["Supply chain", "Economics", "Web dev"],
+    status: "open",
+    progress: 0,
+  },
 ];
 
 const statusColors: Record<string, string> = {
