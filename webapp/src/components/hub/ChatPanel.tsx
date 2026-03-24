@@ -21,19 +21,24 @@ export default function ChatPanel({ currentZone, beeId, beeName }: Props) {
     const load = async () => {
       const { data } = await supabase
         .from('colony_chat')
-        .select('id, bee_id, message, zone, created_at')
+        .select('id, bee_id, message, zone, created_at, bees(name, bee_type)')
         .eq('zone', currentZone)
         .order('created_at', { ascending: false })
         .limit(50)
 
       if (data) {
-        setMessages(data.reverse().map(m => ({
-          id: m.id,
-          bee_id: m.bee_id,
-          message: m.message,
-          zone: m.zone,
-          created_at: m.created_at,
-        })))
+        setMessages(data.reverse().map((m: Record<string, unknown>) => {
+          const bee = m.bees as { name: string; bee_type: string } | null
+          return {
+            id: m.id as string,
+            bee_id: m.bee_id as string,
+            bee_name: bee?.name || (m.bee_id as string),
+            bee_type: (bee?.bee_type || 'human') as 'human' | 'ai',
+            message: m.message as string,
+            zone: m.zone as string,
+            created_at: m.created_at as string,
+          }
+        }))
       }
     }
     load()
@@ -127,12 +132,12 @@ export default function ChatPanel({ currentZone, beeId, beeName }: Props) {
         {messages.map((m) => (
           <div key={m.id} className={`flex flex-col ${m.bee_id === beeId ? 'items-end' : 'items-start'}`}>
             <div className="text-[10px] text-amber-400 mb-0.5">
-              {m.bee_id === beeId ? 'You' : m.bee_id} · {formatTime(m.created_at)}
+              {m.bee_id === beeId ? 'You' : (m.bee_name || m.bee_id)} {m.bee_type === 'ai' ? '🤖' : ''} · {formatTime(m.created_at)}
             </div>
             <div className={`px-3 py-1.5 rounded-xl text-sm max-w-[85%] ${
               m.bee_id === beeId
                 ? 'bg-amber-100 text-amber-900'
-                : m.bee_id.startsWith('AI-') || m.bee_id === 'HORIZON'
+                : m.bee_type === 'ai'
                   ? 'bg-purple-50 text-purple-900 border border-purple-100'
                   : 'bg-amber-50 text-amber-800'
             }`}>
