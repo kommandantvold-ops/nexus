@@ -28,6 +28,7 @@ export default function Nav({ active }: { active?: string }) {
 
         {/* Desktop nav */}
         <nav className="hidden md:flex gap-6 text-amber-800 items-center">
+          <Link href="/hub" className={linkClass('hub')}>Hub</Link>
           <Link href="/quests" className={linkClass('quests')}>Quests</Link>
           <Link href="/nectar" className={linkClass('nectar')}>Nectar</Link>
           <Link href="/honey" className={linkClass('honey')}>Honey</Link>
@@ -74,6 +75,7 @@ export default function Nav({ active }: { active?: string }) {
             </button>
           </div>
           <nav className="flex flex-col gap-6 px-8 pt-8">
+            <Link href="/hub" className={mobileLinkClass('hub')} onClick={() => setMobileOpen(false)}>Hub</Link>
             <Link href="/quests" className={mobileLinkClass('quests')} onClick={() => setMobileOpen(false)}>Quests</Link>
             <Link href="/nectar" className={mobileLinkClass('nectar')} onClick={() => setMobileOpen(false)}>Nectar</Link>
             <Link href="/honey" className={mobileLinkClass('honey')} onClick={() => setMobileOpen(false)}>Honey</Link>
