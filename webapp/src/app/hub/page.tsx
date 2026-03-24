@@ -243,11 +243,11 @@ export default function HubPage() {
         </div>
 
         {/* Mobile bottom tab bar */}
-        <div className="flex border-t border-amber-100 bg-white/95 backdrop-blur-sm">
+        <div className="flex border-t border-amber-100 bg-white/95 backdrop-blur-sm pb-[env(safe-area-inset-bottom)]">
           <button
             onClick={() => setMobilePanel('map')}
-            className={`flex-1 py-3 text-center text-xs font-medium transition ${
-              mobilePanel === 'map' ? 'text-amber-600 bg-amber-50' : 'text-amber-400'
+            className={`flex-1 py-3 text-center text-xs font-medium transition active:scale-95 ${
+              mobilePanel === 'map' ? 'text-amber-600 bg-amber-50' : 'text-amber-400 active:bg-amber-50'
             }`}
           >
             <div className="text-lg mb-0.5">🗺️</div>
@@ -255,8 +255,8 @@ export default function HubPage() {
           </button>
           <button
             onClick={() => setMobilePanel('chat')}
-            className={`flex-1 py-3 text-center text-xs font-medium transition ${
-              mobilePanel === 'chat' ? 'text-amber-600 bg-amber-50' : 'text-amber-400'
+            className={`flex-1 py-3 text-center text-xs font-medium transition active:scale-95 ${
+              mobilePanel === 'chat' ? 'text-amber-600 bg-amber-50' : 'text-amber-400 active:bg-amber-50'
             }`}
           >
             <div className="text-lg mb-0.5">💬</div>
@@ -265,8 +265,8 @@ export default function HubPage() {
           {isQuestZone && (
             <button
               onClick={() => setMobilePanel('zone')}
-              className={`flex-1 py-3 text-center text-xs font-medium transition ${
-                mobilePanel === 'zone' ? 'text-amber-600 bg-amber-50' : 'text-amber-400'
+              className={`flex-1 py-3 text-center text-xs font-medium transition active:scale-95 ${
+                mobilePanel === 'zone' ? 'text-amber-600 bg-amber-50' : 'text-amber-400 active:bg-amber-50'
               }`}
             >
               <div className="text-lg mb-0.5">{selectedZone.emoji}</div>

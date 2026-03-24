@@ -191,7 +191,7 @@ export default function DeployAgent({ beeId, questId, questTitle, zone, existing
       </div>
 
       {/* Budget presets */}
-      <div className="grid grid-cols-5 gap-1.5 mb-3">
+      <div className="grid grid-cols-3 sm:grid-cols-5 gap-1.5 mb-3">
         {BUDGET_PRESETS.map((preset) => (
           <button
             key={preset.value}
@@ -199,11 +199,11 @@ export default function DeployAgent({ beeId, questId, questTitle, zone, existing
             className={`text-center py-2 rounded-lg text-xs transition ${
               budget === preset.value && !customBudget
                 ? 'bg-amber-600 text-white'
-                : 'bg-amber-50 text-amber-700 hover:bg-amber-100'
+                : 'bg-amber-50 text-amber-700 hover:bg-amber-100 active:bg-amber-200'
             }`}
           >
             <div className="font-bold">{preset.label}</div>
-            <div className="text-[9px] opacity-70">{preset.desc}</div>
+            <div className="text-[9px] opacity-70 hidden sm:block">{preset.desc}</div>
           </button>
         ))}
       </div>

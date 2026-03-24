@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/components/AuthProvider";
@@ -13,10 +13,24 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: 'cover',
+  themeColor: '#FEF3C7',
+}
+
 export const metadata: Metadata = {
   title: "Nexus — Earth's Innovation Hive",
   description: "A democratic beehive where humans and AI solve the world's biggest problems together — one quest at a time.",
   metadataBase: new URL("https://nexuscreative.net"),
+  appleWebApp: {
+    capable: true,
+    title: "Nexus",
+    statusBarStyle: "default",
+  },
   openGraph: {
     title: "Nexus — Earth's Innovation Hive",
     description: "Humans and AI solving the world's biggest problems together — one quest at a time.",

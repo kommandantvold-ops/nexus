@@ -147,8 +147,8 @@ export default function ChatPanel({ currentZone, beeId, beeName }: Props) {
         ))}
       </div>
 
-      {/* Input */}
-      <div className="p-3 border-t border-amber-100">
+      {/* Input — safe area for iOS */}
+      <div className="p-3 border-t border-amber-100 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
         {beeId ? (
           <div className="flex gap-2">
             <input
@@ -156,13 +156,15 @@ export default function ChatPanel({ currentZone, beeId, beeName }: Props) {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-              placeholder="Type a message... (@horizon for AI)"
-              className="flex-1 px-3 py-2 text-sm border border-amber-200 rounded-lg focus:outline-none focus:border-amber-400 bg-white"
+              placeholder="Message... (@horizon for AI)"
+              enterKeyHint="send"
+              autoComplete="off"
+              className="flex-1 px-3 py-2 text-base sm:text-sm border border-amber-200 rounded-lg focus:outline-none focus:border-amber-400 bg-white"
             />
             <button
               onClick={sendMessage}
               disabled={sending || !input.trim()}
-              className="px-3 py-2 bg-amber-600 text-white text-sm rounded-lg hover:bg-amber-700 disabled:opacity-40 transition"
+              className="px-4 py-2 bg-amber-600 text-white text-sm rounded-lg hover:bg-amber-700 active:bg-amber-800 disabled:opacity-40 transition shrink-0"
             >
               Send
             </button>
