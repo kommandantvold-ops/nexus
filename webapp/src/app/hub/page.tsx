@@ -9,14 +9,15 @@ import ChatPanel from '@/components/hub/ChatPanel'
 import PresenceBar from '@/components/hub/PresenceBar'
 import DeployAgent from '@/components/hub/DeployAgent'
 import TokenGauge from '@/components/hub/TokenGauge'
-import { ZONES, getZone, type Zone } from '@/lib/hub/zones'
+import { ZONES, type Zone } from '@/lib/hub/zones'
 import type { HubBee, Trophy } from '@/lib/hub/hubTypes'
 
-// Quest count per category (static for now, could be fetched)
 const QUEST_COUNTS: Record<string, number> = {
   samphun: 8, transport: 3, symbiosis: 3, aqua: 8,
   terra: 4, heal: 3, spark: 3, sol: 4, gaia: 3, forge: 3,
 }
+
+type MobilePanel = 'map' | 'chat' | 'zone'
 
 export default function HubPage() {
   const { bee } = useAuth()
@@ -26,6 +27,7 @@ export default function HubPage() {
     ZONES.find(z => z.id === 'core') || null
   )
   const [myPosition, setMyPosition] = useState({ q: 0, r: 0 })
+  const [mobilePanel, setMobilePanel] = useState<MobilePanel>('map')
 
   // Load trophies
   useEffect(() => {
@@ -84,48 +86,44 @@ export default function HubPage() {
     return () => { supabase.removeChannel(channel) }
   }, [bee, myPosition, selectedZone])
 
-  // Also seed Horizon as an AI presence
+  // Seed Horizon AI presence
   useEffect(() => {
     const horizonBee: HubBee = {
-      id: 'HORIZON',
-      name: 'Horizon',
-      bee_type: 'ai',
-      bee_color: 'lavender',
-      stripe_color: 'navy',
-      accessory: 'antenna',
-      title: 'Digital Pollinator',
-      position: { q: 0, r: 0 },
-      zone: 'core',
-      status: 'active',
+      id: 'HORIZON', name: 'Horizon', bee_type: 'ai',
+      bee_color: 'lavender', stripe_color: 'navy', accessory: 'antenna',
+      title: 'Digital Pollinator', position: { q: 0, r: 0 }, zone: 'core', status: 'active',
     }
-    setOnlineBees(prev => {
-      if (prev.find(b => b.id === 'HORIZON')) return prev
-      return [...prev, horizonBee]
-    })
+    setOnlineBees(prev => prev.find(b => b.id === 'HORIZON') ? prev : [...prev, horizonBee])
   }, [])
 
   const handleHexClick = useCallback((q: number, r: number, zone: Zone | undefined) => {
     if (zone) {
       setSelectedZone(zone)
       setMyPosition({ q, r })
+      // On mobile, show zone panel when tapping a quest zone
+      if (zone.category !== 'core' && zone.category !== 'trophies') {
+        setMobilePanel('zone')
+      }
     }
   }, [])
 
   const currentZoneId = selectedZone?.id || 'core'
   const questCount = QUEST_COUNTS[selectedZone?.category || ''] || 0
+  const isQuestZone = selectedZone && selectedZone.category !== 'core' && selectedZone.category !== 'trophies'
 
   return (
     <div className="h-screen flex flex-col bg-gradient-to-b from-amber-50 to-orange-50">
       <Nav active="hub" />
 
+      {/* Presence bar — compact on mobile */}
       <PresenceBar
         onlineBees={onlineBees}
         currentZone={selectedZone}
         questCount={questCount}
       />
 
-      {/* Main content — canvas + chat */}
-      <div className="flex-1 flex min-h-0">
+      {/* === DESKTOP LAYOUT === */}
+      <div className="hidden md:flex flex-1 min-h-0">
         {/* Canvas area */}
         <div className="flex-1 relative">
           <HubCanvas
@@ -136,8 +134,8 @@ export default function HubPage() {
             selectedZone={selectedZone?.id || null}
           />
 
-          {/* Zone info overlay (bottom-left) */}
-          {selectedZone && selectedZone.category !== 'core' && selectedZone.category !== 'trophies' && (
+          {/* Zone info overlay (desktop) */}
+          {isQuestZone && (
             <div className="absolute bottom-4 left-4 max-w-sm space-y-3">
               <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-amber-100">
                 <div className="flex items-center gap-2 mb-2">
@@ -149,18 +147,11 @@ export default function HubPage() {
                     </span>
                   )}
                 </div>
-                <p className="text-xs text-amber-700 mb-2">
-                  {questCount} sidequests available
-                </p>
-                <a
-                  href={`/quests?category=${selectedZone.category}`}
-                  className="text-xs text-amber-600 font-medium hover:underline"
-                >
+                <p className="text-xs text-amber-700 mb-2">{questCount} sidequests available</p>
+                <a href={`/quests?category=${selectedZone.category}`} className="text-xs text-amber-600 font-medium hover:underline">
                   View quest board →
                 </a>
               </div>
-
-              {/* Deploy Agent panel */}
               {bee && (
                 <DeployAgent
                   beeId={bee.id}
@@ -173,19 +164,115 @@ export default function HubPage() {
             </div>
           )}
 
-          {/* Help hint */}
-          <div className="absolute bottom-4 right-4 text-xs text-amber-400">
+          <div className="absolute bottom-4 right-4 text-xs text-amber-400 hidden lg:block">
             Click a zone · Drag to pan · @horizon in chat for AI
           </div>
         </div>
 
-        {/* Chat sidebar */}
-        <div className="w-80 hidden md:flex flex-col">
-          <ChatPanel
-            currentZone={currentZoneId}
-            beeId={bee?.id || null}
-            beeName={bee?.name || null}
-          />
+        {/* Chat sidebar (desktop) */}
+        <div className="w-80 flex flex-col border-l border-amber-100">
+          <ChatPanel currentZone={currentZoneId} beeId={bee?.id || null} beeName={bee?.name || null} />
+        </div>
+      </div>
+
+      {/* === MOBILE LAYOUT === */}
+      <div className="flex flex-col flex-1 min-h-0 md:hidden">
+        {/* Main content area — swaps based on active panel */}
+        <div className="flex-1 relative overflow-hidden">
+          {/* Map view */}
+          <div className={`absolute inset-0 transition-transform duration-300 ${mobilePanel === 'map' ? 'translate-x-0' : '-translate-x-full'}`}>
+            <HubCanvas
+              bees={onlineBees}
+              trophies={trophies}
+              myBeeId={bee?.id || null}
+              onHexClick={handleHexClick}
+              selectedZone={selectedZone?.id || null}
+            />
+          </div>
+
+          {/* Chat view */}
+          <div className={`absolute inset-0 transition-transform duration-300 ${mobilePanel === 'chat' ? 'translate-x-0' : 'translate-x-full'}`}>
+            <ChatPanel currentZone={currentZoneId} beeId={bee?.id || null} beeName={bee?.name || null} />
+          </div>
+
+          {/* Zone detail view */}
+          <div className={`absolute inset-0 transition-transform duration-300 bg-gradient-to-b from-amber-50 to-orange-50 overflow-y-auto ${mobilePanel === 'zone' ? 'translate-x-0' : 'translate-x-full'}`}>
+            {isQuestZone && (
+              <div className="p-4 space-y-4">
+                {/* Zone header */}
+                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 border border-amber-100">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-3xl">{selectedZone.emoji}</span>
+                    <div>
+                      <div className="font-bold text-amber-900 text-lg">{selectedZone.name}</div>
+                      <div className="text-xs text-amber-500">
+                        {selectedZone.sdg && <span className="mr-2">{selectedZone.sdg}</span>}
+                        {questCount} sidequests
+                      </div>
+                    </div>
+                  </div>
+                  <a
+                    href={`/quests?category=${selectedZone.category}`}
+                    className="inline-block text-sm text-amber-600 font-medium bg-amber-50 px-4 py-2 rounded-lg hover:bg-amber-100 transition"
+                  >
+                    View quest board →
+                  </a>
+                </div>
+
+                {/* Deploy Agent */}
+                {bee && (
+                  <DeployAgent
+                    beeId={bee.id}
+                    questId={`MQ-${selectedZone.id.toUpperCase()}`}
+                    questTitle={selectedZone.name}
+                    zone={selectedZone.id}
+                    onSessionCreated={() => {}}
+                  />
+                )}
+
+                {/* Back to map */}
+                <button
+                  onClick={() => setMobilePanel('map')}
+                  className="w-full py-3 text-sm text-amber-600 font-medium bg-white/80 rounded-xl border border-amber-100"
+                >
+                  ← Back to map
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Mobile bottom tab bar */}
+        <div className="flex border-t border-amber-100 bg-white/95 backdrop-blur-sm">
+          <button
+            onClick={() => setMobilePanel('map')}
+            className={`flex-1 py-3 text-center text-xs font-medium transition ${
+              mobilePanel === 'map' ? 'text-amber-600 bg-amber-50' : 'text-amber-400'
+            }`}
+          >
+            <div className="text-lg mb-0.5">🗺️</div>
+            Map
+          </button>
+          <button
+            onClick={() => setMobilePanel('chat')}
+            className={`flex-1 py-3 text-center text-xs font-medium transition ${
+              mobilePanel === 'chat' ? 'text-amber-600 bg-amber-50' : 'text-amber-400'
+            }`}
+          >
+            <div className="text-lg mb-0.5">💬</div>
+            Chat
+          </button>
+          {isQuestZone && (
+            <button
+              onClick={() => setMobilePanel('zone')}
+              className={`flex-1 py-3 text-center text-xs font-medium transition ${
+                mobilePanel === 'zone' ? 'text-amber-600 bg-amber-50' : 'text-amber-400'
+              }`}
+            >
+              <div className="text-lg mb-0.5">{selectedZone.emoji}</div>
+              {selectedZone.name.slice(0, 8)}
+            </button>
+          )}
         </div>
       </div>
     </div>

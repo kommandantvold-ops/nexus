@@ -279,8 +279,54 @@ export default function HubCanvas({ bees, trophies, myBeeId, onHexClick, selecte
     setTimeout(() => { dragRef.current = { dragging: false, startX: 0, startY: 0, camStartX: 0, camStartY: 0 } }, 50)
   }, [])
 
+  // Touch handlers for mobile
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    if (e.touches.length !== 1) return
+    const t = e.touches[0]
+    dragRef.current = {
+      dragging: false,
+      startX: t.clientX,
+      startY: t.clientY,
+      camStartX: cameraRef.current.x,
+      camStartY: cameraRef.current.y,
+    }
+  }, [])
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (e.touches.length !== 1) return
+    const t = e.touches[0]
+    const d = dragRef.current
+    if (d.startX === 0 && d.startY === 0) return
+    const dx = t.clientX - d.startX
+    const dy = t.clientY - d.startY
+    if (Math.abs(dx) + Math.abs(dy) > 8) d.dragging = true
+    cameraRef.current.x = d.camStartX + dx
+    cameraRef.current.y = d.camStartY + dy
+    e.preventDefault() // prevent page scroll while panning
+  }, [])
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    const d = dragRef.current
+    if (!d.dragging && e.changedTouches.length === 1) {
+      // Tap — treat as click
+      const t = e.changedTouches[0]
+      const canvas = canvasRef.current
+      if (!canvas) return
+      const rect = canvas.getBoundingClientRect()
+      const cam = cameraRef.current
+      const cx = rect.width / 2 + cam.x
+      const cy = rect.height / 2 + cam.y
+      const mx = t.clientX - rect.left - cx
+      const my = t.clientY - rect.top - cy
+      const [q, r] = pixelToHex(mx, my)
+      const zone = ZONES.find(z => z.q === q && z.r === r)
+      if (zone) onHexClick(q, r, zone)
+    }
+    setTimeout(() => { dragRef.current = { dragging: false, startX: 0, startY: 0, camStartX: 0, camStartY: 0 } }, 50)
+  }, [onHexClick])
+
   return (
-    <div ref={containerRef} className="w-full h-full relative cursor-grab active:cursor-grabbing">
+    <div ref={containerRef} className="w-full h-full relative cursor-grab active:cursor-grabbing touch-none">
       <canvas
         ref={canvasRef}
         onClick={handleClick}
@@ -288,6 +334,9 @@ export default function HubCanvas({ bees, trophies, myBeeId, onHexClick, selecte
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         className="block w-full h-full"
       />
     </div>

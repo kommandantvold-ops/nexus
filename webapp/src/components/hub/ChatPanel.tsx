@@ -115,7 +115,7 @@ export default function ChatPanel({ currentZone, beeId, beeName }: Props) {
   const zoneName = currentZone === 'core' ? 'Hive Core' : currentZone.toUpperCase()
 
   return (
-    <div className="flex flex-col h-full bg-white/90 backdrop-blur-sm border-l border-amber-100">
+    <div className="flex flex-col h-full bg-white/90 backdrop-blur-sm md:border-l border-amber-100">
       {/* Header */}
       <div className="px-4 py-3 border-b border-amber-100">
         <div className="text-sm font-bold text-amber-900">💬 {zoneName} Chat</div>
