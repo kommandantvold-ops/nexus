@@ -1,5 +1,7 @@
 "use client";
 
+import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -39,29 +41,7 @@ export default function HelpPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50">
-      <header className="flex items-center justify-between px-8 py-6 max-w-6xl mx-auto">
-        <Link href="/" className="flex items-center gap-3">
-          <span className="text-3xl">🐝</span>
-          <span className="text-2xl font-bold text-amber-900">Nexus</span>
-        </Link>
-        <nav className="flex gap-6 text-amber-800">
-          <Link href="/quests" className="hover:text-amber-600 transition">
-            Quests
-          </Link>
-          <Link href="/honey" className="hover:text-amber-600 transition">
-            Honey
-          </Link>
-          <Link href="/about" className="hover:text-amber-600 transition">
-            About
-          </Link>
-          <Link href="/blog" className="hover:text-amber-600 transition">
-            Blog
-          </Link>
-          <Link href="/join" className="hover:text-amber-600 transition">
-            Join
-          </Link>
-        </nav>
-      </header>
+      <Nav active="help" />
 
       <main className="max-w-2xl mx-auto px-8 py-16">
         <h1 className="text-4xl font-bold text-amber-900 mb-4 text-center">

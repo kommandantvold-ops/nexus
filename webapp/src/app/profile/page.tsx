@@ -1,4 +1,5 @@
 'use client'
+import Footer from "@/components/Footer";
 
 import { useState, useEffect } from 'react'
 import { useAuth } from '@/components/AuthProvider'
@@ -240,13 +241,7 @@ export default function ProfilePage() {
         </div>
       </main>
 
-      <footer className="text-center py-10 text-amber-700 text-sm">
-        <p>
-          Built by humans and AI together.{' '}
-          <a href="https://github.com/kommandantvold-ops/nexus" className="underline hover:text-amber-500" target="_blank" rel="noopener noreferrer">Open source</a>{' '}
-          · MIT License
-        </p>
-      </footer>
+      <Footer />
     </div>
   )
 }
