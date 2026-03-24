@@ -7,6 +7,8 @@ import Nav from '@/components/Nav'
 import HubCanvas from '@/components/hub/HubCanvas'
 import ChatPanel from '@/components/hub/ChatPanel'
 import PresenceBar from '@/components/hub/PresenceBar'
+import DeployAgent from '@/components/hub/DeployAgent'
+import TokenGauge from '@/components/hub/TokenGauge'
 import { ZONES, getZone, type Zone } from '@/lib/hub/zones'
 import type { HubBee, Trophy } from '@/lib/hub/hubTypes'
 
@@ -136,25 +138,38 @@ export default function HubPage() {
 
           {/* Zone info overlay (bottom-left) */}
           {selectedZone && selectedZone.category !== 'core' && selectedZone.category !== 'trophies' && (
-            <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-amber-100 max-w-xs">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-xl">{selectedZone.emoji}</span>
-                <span className="font-bold text-amber-900">{selectedZone.name}</span>
-                {selectedZone.sdg && (
-                  <span className="text-[10px] font-medium text-amber-500 bg-amber-50 px-1.5 py-0.5 rounded">
-                    {selectedZone.sdg}
-                  </span>
-                )}
+            <div className="absolute bottom-4 left-4 max-w-sm space-y-3">
+              <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-amber-100">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xl">{selectedZone.emoji}</span>
+                  <span className="font-bold text-amber-900">{selectedZone.name}</span>
+                  {selectedZone.sdg && (
+                    <span className="text-[10px] font-medium text-amber-500 bg-amber-50 px-1.5 py-0.5 rounded">
+                      {selectedZone.sdg}
+                    </span>
+                  )}
+                </div>
+                <p className="text-xs text-amber-700 mb-2">
+                  {questCount} sidequests available
+                </p>
+                <a
+                  href={`/quests?category=${selectedZone.category}`}
+                  className="text-xs text-amber-600 font-medium hover:underline"
+                >
+                  View quest board →
+                </a>
               </div>
-              <p className="text-xs text-amber-700 mb-2">
-                {questCount} sidequests available
-              </p>
-              <a
-                href={`/quests?category=${selectedZone.category}`}
-                className="text-xs text-amber-600 font-medium hover:underline"
-              >
-                View quest board →
-              </a>
+
+              {/* Deploy Agent panel */}
+              {bee && (
+                <DeployAgent
+                  beeId={bee.id}
+                  questId={`MQ-${selectedZone.id.toUpperCase()}`}
+                  questTitle={selectedZone.name}
+                  zone={selectedZone.id}
+                  onSessionCreated={() => {}}
+                />
+              )}
             </div>
           )}
 
