@@ -459,6 +459,18 @@ const quests: Quest[] = [
     status: "open",
     progress: 0,
   },
+{
+  id: "SQ-SP-004",
+  title: "Garden Tutor — Offline AI Companion",
+  type: "side",
+  category: "spark",
+  description:
+    "An offline AI tutor that teaches the 7 Habits and the 'As If' ethics from The Garden and the Seed. Runs on any local LLM (llama3.2:3b, normistral, qwen2.5:1.5b). No internet required. Contributed by AetherGrok.",
+  skills: ["AI", "Education", "Ethics", "Prompt engineering"],
+  status: "open",
+  progress: 0,
+},
+
   // SOL — SDG 7: Affordable and Clean Energy
   {
     id: "MQ-SOL",
